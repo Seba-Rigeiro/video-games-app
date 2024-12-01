@@ -30,7 +30,7 @@ const Index = () => {
     push(`/game/${gameId}`);
   };
 
-  if (isError) return <div>Error al cargar los juegos</div>;
+  if (isError) return <div>Se produjo un error. Volve a intentar</div>;
 
   return (
     <GradientContainer>

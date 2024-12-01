@@ -22,7 +22,11 @@ export default function GameDetailPage() {
     isLoading: isSearchLoading,
     isError: isSearchError,
   } = useFetchGames(debouncedSearchValue);
-  const { game, isLoading, isError } = useFetchGameById(gameId);
+  const {
+    game,
+    isLoading: isGameFetchLoading,
+    isError: isGameFetchError,
+  } = useFetchGameById(gameId);
 
   const handleOnChangeSearchValue = (value: string) => {
     setSearchValue(value);
@@ -32,7 +36,10 @@ export default function GameDetailPage() {
     push("/inicio");
   };
 
-  if (isLoading) return <Loader />;
+  if (isGameFetchLoading) return <Loader />;
+
+  if (isGameFetchError || isSearchError)
+    return <div>Se produjo un error. Volve a intentar</div>;
 
   return (
     <GradientContainer>

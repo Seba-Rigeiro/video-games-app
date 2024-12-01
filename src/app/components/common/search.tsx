@@ -42,7 +42,7 @@ export const Search: FC<SearchProps> = ({
 
   return (
     <Autocomplete<GameProps>
-      // @ts-ignore
+      //@ts-expect-error @typescript-eslint/ban-ts-comment
       freeSolo
       loading={isLoading}
       options={options}
