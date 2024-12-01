@@ -7,15 +7,21 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { Spacer } from "@/app/components/common/spacer";
+import { GradientContainer } from "@/app/components/common/gradient-container";
+import { Loader } from "@/app/components/common/loader";
 
 export default function GameDetailPage() {
+  const [searchValue, setSearchValue] = useState("");
+
   const { query, push } = useRouter();
   const gameId = query.id as string;
 
-  const [searchValue, setSearchValue] = useState("");
-
   const debouncedSearchValue = useDebounce(searchValue, 300);
-  const { games, isError: isSearchError } = useFetchGames(debouncedSearchValue);
+  const {
+    games,
+    isLoading: isSearchLoading,
+    isError: isSearchError,
+  } = useFetchGames(debouncedSearchValue);
   const { game, isLoading, isError } = useFetchGameById(gameId);
 
   const handleOnChangeSearchValue = (value: string) => {
@@ -26,32 +32,29 @@ export default function GameDetailPage() {
     push("/inicio");
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  console.log("GAME", game);
+  if (isLoading) return <Loader />;
 
   return (
-    <Box p="8px">
-      <Box
-        style={{
-          background: `linear-gradient(166.04deg, rgba(255, 0, 174, 0.16) 17.78%, rgba(255, 255, 255, 0) 92.83%)`,
-        }}
-      >
-        <Box display="flex" alignItems="center" gap={1.5}>
-          <IconButton style={{ color: "#3C1661" }} onClick={handleGoBack}>
-            <ArrowBackOutlinedIcon />
-          </IconButton>
-          <Typography
-            variant="subtitle1"
-            fontWeight={600}
-            style={{ color: "#3C1661" }}
-          >
-            Back
-          </Typography>
-        </Box>
-        <Search onSearch={handleOnChangeSearchValue} options={games} />
-        <Spacer size="30px" />
+    <GradientContainer>
+      <Box display="flex" alignItems="center" gap={1.5}>
+        <IconButton style={{ color: "#3C1661" }} onClick={handleGoBack}>
+          <ArrowBackOutlinedIcon />
+        </IconButton>
+        <Typography
+          variant="subtitle1"
+          fontWeight={600}
+          style={{ color: "#3C1661" }}
+        >
+          Back
+        </Typography>
       </Box>
+      <Search
+        onSearch={handleOnChangeSearchValue}
+        options={games}
+        isLoading={isSearchLoading}
+      />
+      <Spacer size="30px" />
       <GameDetail game={game} />;
-    </Box>
+    </GradientContainer>
   );
 }

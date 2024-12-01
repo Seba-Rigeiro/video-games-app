@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 interface SearchProps {
   options: GameProps[];
   onSearch: (query: string) => void;
+  isLoading?: boolean;
 }
 
 const StyledTextField = styled(TextField)`
@@ -32,12 +33,18 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
-export const Search: FC<SearchProps> = ({ onSearch, options = [] }) => {
+export const Search: FC<SearchProps> = ({
+  onSearch,
+  options = [],
+  isLoading,
+}) => {
   const { push } = useRouter();
 
   return (
-    <Autocomplete
+    <Autocomplete<GameProps>
+      // @ts-ignore
       freeSolo
+      loading={isLoading}
       options={options}
       getOptionLabel={(option) => option.name}
       onInputChange={(_, newInputValue: string) => {

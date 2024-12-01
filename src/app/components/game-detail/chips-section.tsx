@@ -31,10 +31,7 @@ export const ChipsSection: FC<ChipsSectionProps> = ({
   return (
     <Box>
       <Box display="flex" gap={2}>
-        <StyledChip
-          icon={<StarIcon />}
-          label={`Rating: ${rating.toFixed(2)}`}
-        />
+        <StyledChip icon={<StarIcon />} label={`Rating: ${rating.toFixed()}`} />
         <StyledChip
           icon={<EventIcon />}
           label={`Released: ${first_release_date}`}

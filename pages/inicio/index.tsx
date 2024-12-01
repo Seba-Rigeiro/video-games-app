@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Spacer } from "@/app/components/common/spacer";
+import { GradientContainer } from "@/app/components/common/gradient-container";
 
 const Index = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -32,19 +33,18 @@ const Index = () => {
   if (isError) return <div>Error al cargar los juegos</div>;
 
   return (
-    <Box
-      px="16px"
-      style={{
-        background: `linear-gradient(166.04deg, rgba(255, 0, 174, 0.16) 17.78%, rgba(255, 255, 255, 0) 92.83%)`,
-      }}
-    >
+    <GradientContainer>
       <Box maxWidth="190px">
         <img src="/logo.svg" alt="Logo" />
       </Box>
-      <Search onSearch={handleOnChangeSearchValue} options={games} />
+      <Search
+        onSearch={handleOnChangeSearchValue}
+        options={games}
+        isLoading={isLoading}
+      />
       <Spacer size="30px" />
       <SavedGamesList games={localGames} onClick={handleGoToGameDetail} />
-    </Box>
+    </GradientContainer>
   );
 };
 
