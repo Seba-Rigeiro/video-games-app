@@ -31,7 +31,7 @@ export const GamesList: FC<GamesListProps> = ({ games, onClick, onDelete }) => {
       {games.map((game) => (
         <ImageListItem key={game.id}>
           <img
-            src={getCoverUrl(game.cover?.image_id ?? "", Sizes.SMALL)}
+            src={getCoverUrl(game.cover?.image_id ?? "", Sizes.BIG)}
             alt={game.name}
             style={{ borderRadius: "8px" }}
             onClick={() => onClick?.(game.id)}

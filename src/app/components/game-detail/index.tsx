@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Snackbar, Alert } from "@mui/material";
 import { Game } from "@/app/entities/game";
 import { ChipsSection } from "./chips-section";
 import { Carousel } from "../common/carousel";
@@ -30,6 +30,8 @@ const StyledButton = styled(Button)(({ variant }) => ({
 
 export const GameDetail: FC<GameDetailProps> = ({ game }) => {
   const [isCollected, setIsCollected] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarType, setSnackbarType] = useState<"success" | "error">();
 
   const {
     cover,
@@ -58,13 +60,21 @@ export const GameDetail: FC<GameDetailProps> = ({ game }) => {
       games.push(game);
       localStorage.setItem("games", JSON.stringify(games));
       setIsCollected(true);
+      setSnackbarType("success");
+      setSnackbarOpen(true);
     } else {
       const updatedGames = games.filter(
         (savedGame) => savedGame.id !== game.id
       );
       localStorage.setItem("games", JSON.stringify(updatedGames));
       setIsCollected(false);
+      setSnackbarType("error");
+      setSnackbarOpen(true);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -100,6 +110,30 @@ export const GameDetail: FC<GameDetailProps> = ({ game }) => {
         Similar Games
       </Typography>
       <GamesList games={similar_games} />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={1000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarType === "success" ? "success" : "error"}
+          style={{
+            border: `2px solid ${snackbarType === "success" ? "green" : "red"}`,
+            borderRadius: "8px",
+          }}
+        >
+          <Typography variant="subtitle1" fontWeight={600}>
+            {snackbarType === "success" ? "Game Collected" : "Game Removed"}
+          </Typography>
+          <Typography variant="body2">
+            {snackbarType === "success"
+              ? `${name} has been added to your collection.`
+              : `${name} has been removed from your collection.`}
+          </Typography>
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
