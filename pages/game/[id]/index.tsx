@@ -44,6 +44,7 @@ export default function GameDetailPage() {
 
   return (
     <GradientContainer>
+      <Spacer size="12px" />
       <Box display="flex" alignItems="center" gap={1.5}>
         <IconButton style={{ color: "#3C1661" }} onClick={handleGoBack}>
           <ArrowBackOutlinedIcon />
@@ -56,13 +57,14 @@ export default function GameDetailPage() {
           Back
         </Typography>
       </Box>
+      <Spacer size="12px" />
       <Search
         onSearch={handleOnChangeSearchValue}
         options={games}
         isLoading={isSearchLoading}
       />
-      <Spacer size="30px" />
-      <GameDetail game={game} />;
+      <Spacer size="48px" />
+      <GameDetail game={game} />
     </GradientContainer>
   );
 }
