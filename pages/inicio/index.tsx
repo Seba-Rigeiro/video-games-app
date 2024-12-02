@@ -3,7 +3,7 @@ import { useFetchGames } from "@/app/api/use-fetch-games";
 import { Search } from "@/app/components/common/search";
 import { GameProps, SavedGamesList } from "@/app/components/saved-games-list";
 import { useDebounce } from "@/app/helpers/use-debounce";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Spacer } from "@/app/components/common/spacer";
@@ -40,22 +40,24 @@ const Index = () => {
   if (isError) return <div>Se produjo un error. Volve a intentar</div>;
 
   return (
-    <GradientContainer>
-      <Box maxWidth="190px">
-        <Image src="/logo.svg" alt="Logo" width={190} height={80} />
-      </Box>
-      <Search
-        onSearch={handleOnChangeSearchValue}
-        options={games}
-        isLoading={isLoading}
-      />
-      <Spacer size="30px" />
-      <SavedGamesList
-        games={savedGames}
-        onClick={handleGoToGameDetail}
-        onDelete={handleOnDeleteGame}
-      />
-    </GradientContainer>
+    <Container maxWidth="md">
+      <GradientContainer>
+        <Box maxWidth="190px">
+          <Image src="/logo.svg" alt="Logo" width={190} height={80} />
+        </Box>
+        <Search
+          onSearch={handleOnChangeSearchValue}
+          options={games}
+          isLoading={isLoading}
+        />
+        <Spacer size="30px" />
+        <SavedGamesList
+          games={savedGames}
+          onClick={handleGoToGameDetail}
+          onDelete={handleOnDeleteGame}
+        />
+      </GradientContainer>
+    </Container>
   );
 };
 

@@ -2,7 +2,7 @@ import { useFetchGames } from "@/app/api/use-fetch-games";
 import { Search } from "@/app/components/common/search";
 import { GameDetail } from "@/app/components/game-detail";
 import { useDebounce } from "@/app/helpers/use-debounce";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Container, IconButton, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
@@ -43,28 +43,30 @@ export default function GameDetailPage() {
     return <div>Se produjo un error. Volve a intentar</div>;
 
   return (
-    <GradientContainer>
-      <Spacer size="12px" />
-      <Box display="flex" alignItems="center" gap={1.5}>
-        <IconButton style={{ color: "#3C1661" }} onClick={handleGoBack}>
-          <ArrowBackOutlinedIcon />
-        </IconButton>
-        <Typography
-          variant="subtitle1"
-          fontWeight={600}
-          style={{ color: "#3C1661" }}
-        >
-          Back
-        </Typography>
-      </Box>
-      <Spacer size="12px" />
-      <Search
-        onSearch={handleOnChangeSearchValue}
-        options={games}
-        isLoading={isSearchLoading}
-      />
-      <Spacer size="48px" />
-      <GameDetail game={game} />
-    </GradientContainer>
+    <Container maxWidth="md">
+      <GradientContainer>
+        <Spacer size="12px" />
+        <Box display="flex" alignItems="center" gap={1.5}>
+          <IconButton style={{ color: "#3C1661" }} onClick={handleGoBack}>
+            <ArrowBackOutlinedIcon />
+          </IconButton>
+          <Typography
+            variant="subtitle1"
+            fontWeight={600}
+            style={{ color: "#3C1661" }}
+          >
+            Back
+          </Typography>
+        </Box>
+        <Spacer size="12px" />
+        <Search
+          onSearch={handleOnChangeSearchValue}
+          options={games}
+          isLoading={isSearchLoading}
+        />
+        <Spacer size="48px" />
+        <GameDetail game={game} />
+      </GradientContainer>
+    </Container>
   );
 }
