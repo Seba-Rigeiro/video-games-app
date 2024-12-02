@@ -11,6 +11,7 @@ import { Spacer } from "../common/spacer";
 
 interface GameDetailProps {
   game: Game;
+  isMobile: boolean;
 }
 
 const StyledButton = styled(Button)(({ variant }) => ({
@@ -28,7 +29,7 @@ const StyledButton = styled(Button)(({ variant }) => ({
   },
 }));
 
-export const GameDetail: FC<GameDetailProps> = ({ game }) => {
+export const GameDetail: FC<GameDetailProps> = ({ game, isMobile }) => {
   const [isCollected, setIsCollected] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarType, setSnackbarType] = useState<"success" | "error">();
@@ -109,7 +110,7 @@ export const GameDetail: FC<GameDetailProps> = ({ game }) => {
       <Typography variant="h6" component="h2">
         Similar Games
       </Typography>
-      <GamesList games={similar_games} />
+      <GamesList games={similar_games} isMobile={isMobile} />
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={1000}

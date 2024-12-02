@@ -3,7 +3,7 @@ import { useFetchGames } from "@/app/api/use-fetch-games";
 import { Search } from "@/app/components/common/search";
 import { GameProps, SavedGamesList } from "@/app/components/saved-games-list";
 import { useDebounce } from "@/app/helpers/use-debounce";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Theme, useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Spacer } from "@/app/components/common/spacer";
@@ -15,6 +15,10 @@ const Index = () => {
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const { games, isLoading, isError } = useFetchGames(debouncedSearchValue);
   const { push } = useRouter();
+
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down("sm")
+  );
 
   useEffect(() => {
     const storedGames = localStorage.getItem("games");
@@ -42,19 +46,28 @@ const Index = () => {
   return (
     <Container maxWidth="md">
       <GradientContainer>
-        <Box maxWidth="190px">
-          <Image src="/logo.svg" alt="Logo" width={190} height={80} />
+        <Box
+          display="flex"
+          alignItems={isMobile ? "none" : "center"}
+          flexDirection="column"
+        >
+          <Box maxWidth="190px">
+            <Image src="/logo.svg" alt="Logo" width={190} height={80} />
+          </Box>
+
+          <Search
+            onSearch={handleOnChangeSearchValue}
+            options={games}
+            isLoading={isLoading}
+          />
+
+          <Spacer size="30px" />
         </Box>
-        <Search
-          onSearch={handleOnChangeSearchValue}
-          options={games}
-          isLoading={isLoading}
-        />
-        <Spacer size="30px" />
         <SavedGamesList
           games={savedGames}
           onClick={handleGoToGameDetail}
           onDelete={handleOnDeleteGame}
+          isMobile={isMobile}
         />
       </GradientContainer>
     </Container>

@@ -18,6 +18,8 @@ interface SearchProps {
 }
 
 const StyledTextField = styled(TextField)`
+  max-width: 358px;
+  width: 100%;
   & .MuiOutlinedInput-root {
     border-radius: 20px;
     padding: 0 8px;
@@ -55,6 +57,7 @@ export const Search: FC<SearchProps> = ({
           push(`/game/${selectedOption.id}`);
         }
       }}
+      style={{ display: "contents" }}
       renderOption={(props, option) => (
         <Box
           display="flex"

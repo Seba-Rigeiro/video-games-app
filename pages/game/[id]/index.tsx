@@ -2,7 +2,14 @@ import { useFetchGames } from "@/app/api/use-fetch-games";
 import { Search } from "@/app/components/common/search";
 import { GameDetail } from "@/app/components/game-detail";
 import { useDebounce } from "@/app/helpers/use-debounce";
-import { Box, Container, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  IconButton,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
@@ -28,6 +35,10 @@ export default function GameDetailPage() {
     isLoading: isGameFetchLoading,
     isError: isGameFetchError,
   } = useFetchGameById(gameId);
+
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down("sm")
+  );
 
   const handleOnChangeSearchValue = (value: string) => {
     setSearchValue(value);
@@ -59,13 +70,19 @@ export default function GameDetailPage() {
           </Typography>
         </Box>
         <Spacer size="12px" />
-        <Search
-          onSearch={handleOnChangeSearchValue}
-          options={games}
-          isLoading={isSearchLoading}
-        />
+        <Box
+          display="flex"
+          alignItems={isMobile ? "none" : "center"}
+          flexDirection="column"
+        >
+          <Search
+            onSearch={handleOnChangeSearchValue}
+            options={games}
+            isLoading={isSearchLoading}
+          />
+        </Box>
         <Spacer size="48px" />
-        <GameDetail game={game} />
+        <GameDetail game={game} isMobile={isMobile} />
       </GradientContainer>
     </Container>
   );

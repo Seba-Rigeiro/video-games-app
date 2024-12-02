@@ -20,12 +20,18 @@ interface GamesListProps {
   games: GameProps[];
   onClick?: (gameId: string) => void;
   onDelete?: (gameId: string) => void;
+  isMobile: boolean;
 }
-export const GamesList: FC<GamesListProps> = ({ games, onClick, onDelete }) => {
+export const GamesList: FC<GamesListProps> = ({
+  games,
+  onClick,
+  onDelete,
+  isMobile,
+}) => {
   return (
     <ImageList
       style={{ minWidth: "114px", minHeight: "152px" }}
-      cols={3}
+      cols={isMobile ? 3 : 4}
       gap={16}
     >
       {games.map((game) => (

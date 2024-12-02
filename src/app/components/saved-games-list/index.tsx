@@ -18,12 +18,14 @@ interface GamesListProps {
   games: GameProps[];
   onClick: (gameId: string) => void;
   onDelete: (gameId: string) => void;
+  isMobile: boolean;
 }
 
 export const SavedGamesList: FC<GamesListProps> = ({
   games,
   onClick,
   onDelete,
+  isMobile,
 }) => {
   const [selectedFilter, setSelectedFilter] = useState<
     "last_added" | "newest" | "oldest"
@@ -54,7 +56,11 @@ export const SavedGamesList: FC<GamesListProps> = ({
   }
 
   return (
-    <Box>
+    <Box
+      display="flex"
+      alignItems={isMobile ? "none" : "center"}
+      flexDirection="column"
+    >
       <Typography
         variant="h6"
         style={{
@@ -83,15 +89,22 @@ export const SavedGamesList: FC<GamesListProps> = ({
           </>
         ) : (
           <>
-            <Filters
-              onChange={handleFilterChange}
-              selectedFilter={selectedFilter}
-            />
+            <Box
+              display="flex"
+              alignItems={isMobile ? "none" : "center"}
+              flexDirection="column"
+            >
+              <Filters
+                onChange={handleFilterChange}
+                selectedFilter={selectedFilter}
+              />
+            </Box>
             <Spacer size="24px" />
             <GamesList
               games={sortedGames}
               onClick={onClick}
               onDelete={onDelete}
+              isMobile={isMobile}
             />
           </>
         )}
