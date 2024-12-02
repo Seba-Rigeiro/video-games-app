@@ -17,9 +17,14 @@ export interface GameProps {
 interface GamesListProps {
   games: GameProps[];
   onClick: (gameId: string) => void;
+  onDelete: (gameId: string) => void;
 }
 
-export const SavedGamesList: FC<GamesListProps> = ({ games, onClick }) => {
+export const SavedGamesList: FC<GamesListProps> = ({
+  games,
+  onClick,
+  onDelete,
+}) => {
   const [selectedFilter, setSelectedFilter] = useState<
     "last_added" | "newest" | "oldest"
   >("last_added");
@@ -83,7 +88,11 @@ export const SavedGamesList: FC<GamesListProps> = ({ games, onClick }) => {
               selectedFilter={selectedFilter}
             />
             <Spacer size="24px" />
-            <GamesList games={sortedGames} onClick={onClick} />
+            <GamesList
+              games={sortedGames}
+              onClick={onClick}
+              onDelete={onDelete}
+            />
           </>
         )}
       </Box>

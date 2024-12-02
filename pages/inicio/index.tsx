@@ -11,7 +11,7 @@ import { GradientContainer } from "@/app/components/common/gradient-container";
 
 const Index = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [localGames, setLocalGames] = useState<GameProps[]>([]);
+  const [savedGames, setSavedGames] = useState<GameProps[]>([]);
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const { games, isLoading, isError } = useFetchGames(debouncedSearchValue);
   const { push } = useRouter();
@@ -19,7 +19,7 @@ const Index = () => {
   useEffect(() => {
     const storedGames = localStorage.getItem("games");
     if (storedGames) {
-      setLocalGames(JSON.parse(storedGames));
+      setSavedGames(JSON.parse(storedGames));
     }
   }, []);
 
@@ -29,6 +29,12 @@ const Index = () => {
 
   const handleGoToGameDetail = (gameId: string) => {
     push(`/game/${gameId}`);
+  };
+
+  const handleOnDeleteGame = (gameId: string) => {
+    const updatedGames = savedGames.filter((game) => game.id !== gameId);
+    setSavedGames(updatedGames);
+    localStorage.setItem("games", JSON.stringify(updatedGames));
   };
 
   if (isError) return <div>Se produjo un error. Volve a intentar</div>;
@@ -44,7 +50,11 @@ const Index = () => {
         isLoading={isLoading}
       />
       <Spacer size="30px" />
-      <SavedGamesList games={localGames} onClick={handleGoToGameDetail} />
+      <SavedGamesList
+        games={savedGames}
+        onClick={handleGoToGameDetail}
+        onDelete={handleOnDeleteGame}
+      />
     </GradientContainer>
   );
 };

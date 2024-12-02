@@ -19,8 +19,9 @@ export interface GameProps {
 interface GamesListProps {
   games: GameProps[];
   onClick?: (gameId: string) => void;
+  onDelete?: (gameId: string) => void;
 }
-export const GamesList: FC<GamesListProps> = ({ games, onClick }) => {
+export const GamesList: FC<GamesListProps> = ({ games, onClick, onDelete }) => {
   return (
     <ImageList
       style={{ minWidth: "114px", minHeight: "152px" }}
@@ -35,14 +36,14 @@ export const GamesList: FC<GamesListProps> = ({ games, onClick }) => {
             style={{ borderRadius: "8px" }}
             onClick={() => onClick?.(game.id)}
           />
-          {onClick && (
+          {onDelete && (
             <ImageListItemBar
               style={{ backgroundColor: "transparent" }}
               actionIcon={
                 <IconButton
                   style={{ backgroundColor: "#FFFFFFD9" }}
                   onClick={() => {
-                    console.log("ICON CLICK");
+                    onDelete(game.id);
                   }}
                 >
                   <DeleteOutlineOutlinedIcon />
