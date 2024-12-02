@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useFetchGames } from "@/app/api/use-fetch-games";
 import { Search } from "@/app/components/common/search";
 import { GameProps, SavedGamesList } from "@/app/components/saved-games-list";
@@ -11,7 +12,7 @@ import { GradientContainer } from "@/app/components/common/gradient-container";
 const Index = () => {
   const [searchValue, setSearchValue] = useState("");
   const [localGames, setLocalGames] = useState<GameProps[]>([]);
-  const debouncedSearchValue = useDebounce(searchValue, 300);
+  const debouncedSearchValue = useDebounce(searchValue, 500);
   const { games, isLoading, isError } = useFetchGames(debouncedSearchValue);
   const { push } = useRouter();
 
@@ -35,7 +36,7 @@ const Index = () => {
   return (
     <GradientContainer>
       <Box maxWidth="190px">
-        <img src="/logo.svg" alt="Logo" />
+        <Image src="/logo.svg" alt="Logo" width={190} height={80} />
       </Box>
       <Search
         onSearch={handleOnChangeSearchValue}

@@ -7,8 +7,8 @@ export const Loader = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh", // Ocupa toda la altura de la pantalla
-        width: "100vw", // Ocupa todo el ancho de la pantalla
+        height: "100vh",
+        width: "100vw",
       }}
     >
       <CircularProgress />

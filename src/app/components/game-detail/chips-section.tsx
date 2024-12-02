@@ -1,7 +1,7 @@
 import { Box, Chip } from "@mui/material";
 import React, { FC } from "react";
-import StarIcon from "@mui/icons-material/StarOutline"; // Icono para rating
-import EventIcon from "@mui/icons-material/EventOutlined"; // Icono para released
+import StarIcon from "@mui/icons-material/StarOutline";
+import EventIcon from "@mui/icons-material/EventOutlined";
 import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
 import { Genre } from "@/app/entities/game";
 import styled from "@emotion/styled";

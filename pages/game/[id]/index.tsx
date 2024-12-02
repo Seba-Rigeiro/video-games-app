@@ -1,4 +1,4 @@
-import { useFetchGameById, useFetchGames } from "@/app/api/use-fetch-games";
+import { useFetchGames } from "@/app/api/use-fetch-games";
 import { Search } from "@/app/components/common/search";
 import { GameDetail } from "@/app/components/game-detail";
 import { useDebounce } from "@/app/helpers/use-debounce";
@@ -9,6 +9,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { Spacer } from "@/app/components/common/spacer";
 import { GradientContainer } from "@/app/components/common/gradient-container";
 import { Loader } from "@/app/components/common/loader";
+import { useFetchGameById } from "@/app/api/use-fetch-game-by-id";
 
 export default function GameDetailPage() {
   const [searchValue, setSearchValue] = useState("");
@@ -16,7 +17,7 @@ export default function GameDetailPage() {
   const { query, push } = useRouter();
   const gameId = query.id as string;
 
-  const debouncedSearchValue = useDebounce(searchValue, 300);
+  const debouncedSearchValue = useDebounce(searchValue, 500);
   const {
     games,
     isLoading: isSearchLoading,
