@@ -1,10 +1,9 @@
 import React, { FC, useState, useEffect } from "react";
-import { Box, Button, Typography, Snackbar, Alert } from "@mui/material";
+import { Box, Typography, Snackbar, Alert } from "@mui/material";
 import { Game } from "@/app/entities/game";
 import { ChipsSection } from "./chips-section";
 import { Carousel } from "../common/carousel";
 import { GamesList } from "../common/games-list";
-import styled from "@emotion/styled";
 import { Description } from "./description";
 import { GameHeader } from "./game-header";
 import { Spacer } from "../common/spacer";
@@ -13,21 +12,6 @@ interface GameDetailProps {
   game: Game;
   isMobile: boolean;
 }
-
-const StyledButton = styled(Button)(({ variant }) => ({
-  borderRadius: "30px",
-  color: variant === "contained" ? "#ffffff" : "#3C1661",
-  backgroundColor: variant === "contained" ? "#3C1661" : "transparent",
-  border: "1px solid #3C1661",
-  textTransform: "none",
-  "&:hover": {
-    border: "1px solid #3C1661",
-    backgroundColor: variant === "contained" ? "#3C1661" : "transparent",
-  },
-  "&:active": {
-    backgroundColor: variant === "contained" ? "#320E6A" : "#E9D4FF",
-  },
-}));
 
 export const GameDetail: FC<GameDetailProps> = ({ game, isMobile }) => {
   const [isCollected, setIsCollected] = useState(false);
@@ -84,15 +68,10 @@ export const GameDetail: FC<GameDetailProps> = ({ game, isMobile }) => {
         name={name}
         cover={cover}
         involved_companies={involved_companies}
-      />
-      <Spacer size="16px" />
-      <StyledButton
-        variant={isCollected ? "outlined" : "contained"}
-        fullWidth
         onClick={handleSaveGameToLocalStorage}
-      >
-        {isCollected ? "Game collected" : "Collect Game"}
-      </StyledButton>
+        isCollected={isCollected}
+        isMobile={isMobile}
+      />
       <Spacer size="16px" />
       <ChipsSection
         rating={rating}
